@@ -1,6 +1,7 @@
 import os
 import queue
 import subprocess
+import sys
 import threading
 import tkinter as tk
 from datetime import datetime
@@ -9,7 +10,13 @@ from tkinter import filedialog, messagebox, ttk
 
 # This file is meant to live in a "GUI" folder inside the toolkit root,
 # next to Downloaders/, Installers/, Utilities/, Logs/, Config/.
-SCRIPT_DIR = Path(__file__).resolve().parent
+# When packaged into an .exe by PyInstaller, __file__ points to a temp
+# extraction folder instead of the real exe location, so this checks for
+# that case and uses sys.executable instead.
+if getattr(sys, "frozen", False):
+    SCRIPT_DIR = Path(sys.executable).resolve().parent
+else:
+    SCRIPT_DIR = Path(__file__).resolve().parent
 TOOLKIT_DIR = SCRIPT_DIR.parent
 CONFIG_DIR = TOOLKIT_DIR / "Config"
 LOGS_DIR = TOOLKIT_DIR / "Logs"

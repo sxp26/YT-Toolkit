@@ -61,6 +61,7 @@ Logs/           download_history.txt, video_playlist_archive.txt,
                 not tracked in this repo)
 Config/         last_folder.txt (generated on your machine,
                 not tracked in this repo)
+GUI/            yt_toolkit_gui.pyw (optional GUI alternative to menu.bat)
 ```
 
 ## Requirements

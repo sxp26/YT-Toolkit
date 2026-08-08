@@ -34,6 +34,20 @@ reuse it, or type `N` to browse for a new one.
 
 Paste the link as-is — no need to wrap it in quotes yourself.
 
+## GUI (alternative to menu.bat)
+
+[#gui-alternative-to-menubat](#gui-alternative-to-menubat)
+
+If you'd rather use a proper window instead of the console menu, run
+`GUI/yt_toolkit_gui.pyw` instead of `menu.bat`. It covers the same four
+download options (video, audio, video playlist, audio playlist) with the
+same quality/format choices, and shares the same `Config/last_folder.txt`
+and `Logs/` files as the batch scripts — so you can switch between the two
+freely without anything breaking or redownloading.
+
+No extra setup needed — it uses `tkinter`, which ships with Python by
+default.
+
 ## Folder Structure
 
 ```

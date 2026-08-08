@@ -8,3 +8,8 @@ Logs/audio_playlist_archive.txt
 # Keep the folders themselves tracked
 !Config/.gitkeep
 !Logs/.gitkeep
+
+# PyInstaller build artifacts
+GUI/build/
+GUI/dist/
+GUI/*.spec

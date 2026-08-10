@@ -72,6 +72,7 @@ class YTToolkitGUI(tk.Tk):
 
         self.download_thread = None
         self.output_queue = queue.Queue()
+        self._last_was_progress = False
 
         self._build_widgets()
         self._poll_queue()
@@ -169,17 +170,24 @@ class YTToolkitGUI(tk.Tk):
             self.folder_var.set(folder)
             save_last_folder(folder)
 
-    def _log_output(self, text):
+    def _log_output(self, text, overwrite=False):
         self.output_text.configure(state="normal")
+        if overwrite:
+            self.output_text.delete("end-2l", "end-1l")
         self.output_text.insert("end", text)
         self.output_text.see("end")
         self.output_text.configure(state="disabled")
+
+    def _is_progress_line(self, line):
+        return line.startswith("[download]") and "%" in line and "ETA" in line
 
     def _poll_queue(self):
         try:
             while True:
                 line = self.output_queue.get_nowait()
-                self._log_output(line)
+                is_progress = self._is_progress_line(line)
+                self._log_output(line, overwrite=is_progress and self._last_was_progress)
+                self._last_was_progress = is_progress
         except queue.Empty:
             pass
         self.after(100, self._poll_queue)
@@ -203,7 +211,8 @@ class YTToolkitGUI(tk.Tk):
         playlist = self.is_playlist.get()
         rng = self.range_var.get().strip()
 
-        cmd = ["py", "-m", "yt_dlp", "--js-runtimes", "node", "--remote-components", "ejs:github"]
+        cmd = ["py", "-m", "yt_dlp", "--js-runtimes", "node", "--remote-components", "ejs:github",
+               "--progress-delta", "1"]
 
         log_type_parts = []
         fmt_for_log = None
@@ -236,6 +245,7 @@ class YTToolkitGUI(tk.Tk):
 
         self.download_btn.configure(state="disabled")
         self.status_var.set("Downloading...")
+        self._last_was_progress = False
         self._log_output(f"\n> Starting {entry_type.lower()} download...\n\n")
 
         self.download_thread = threading.Thread(
@@ -272,6 +282,7 @@ class YTToolkitGUI(tk.Tk):
         self.status_var.set("Done." if success else "Failed.")
 
     def _run_tool_command(self, cmd, label):
+        self._last_was_progress = False
         self._log_output(f"\n> {label}...\n")
 
         def worker():

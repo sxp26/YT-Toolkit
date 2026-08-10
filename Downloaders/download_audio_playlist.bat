@@ -49,7 +49,7 @@ if not "%RANGE%"=="" set RANGEFLAG=--playlist-items %RANGE%
 echo.
 echo Downloading playlist as %AUDIO%...
 
-yt-dlp --js-runtimes node --remote-components ejs:github -x --audio-format %AUDIO% --audio-quality 0 --download-archive "%ARCHIVE%" %RANGEFLAG% -o "%SAVE%\%%(playlist_index)s - %%(title)s.%%(ext)s" "%URL%"
+py -m yt_dlp --js-runtimes node -x --audio-format %AUDIO% --audio-quality 0 --download-archive "%ARCHIVE%" %RANGEFLAG% -o "%SAVE%\%%(playlist_index)s - %%(title)s.%%(ext)s" "%URL%"
 
 if %errorlevel%==0 (
     call "%TOOLKIT%\Utilities\common.bat" :WriteLog "Audio Playlist" "%AUDIO%"

@@ -203,7 +203,7 @@ class YTToolkitGUI(tk.Tk):
         playlist = self.is_playlist.get()
         rng = self.range_var.get().strip()
 
-        cmd = ["yt-dlp", "--js-runtimes", "node", "--remote-components", "ejs:github"]
+        cmd = ["py", "-m", "yt_dlp", "--js-runtimes", "node", "--remote-components", "ejs:github"]
 
         log_type_parts = []
         fmt_for_log = None
@@ -253,7 +253,9 @@ class YTToolkitGUI(tk.Tk):
             process.wait()
             success = process.returncode == 0
         except FileNotFoundError:
-            self.output_queue.put("\nyt-dlp was not found. Use Check Installation below.\n")
+            self.output_queue.put("\nPython (py) was not found. Use Check Installation below.\n")
+        except OSError as exc:
+            self.output_queue.put(f"\nCould not start yt-dlp: {exc}\n")
         except Exception as exc:
             self.output_queue.put(f"\nError: {exc}\n")
 

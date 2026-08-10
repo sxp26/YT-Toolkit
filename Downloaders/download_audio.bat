@@ -42,7 +42,7 @@ if not defined AUDIO (
 echo.
 echo Downloading as %AUDIO%...
 
-yt-dlp --js-runtimes node --remote-components ejs:github -x --audio-format %AUDIO% --audio-quality 0 -o "%SAVE%\%%(title)s.%%(ext)s" "%URL%"
+py -m yt_dlp --js-runtimes node -x --audio-format %AUDIO% --audio-quality 0 -o "%SAVE%\%%(title)s.%%(ext)s" "%URL%"
 
 if %errorlevel%==0 (
     call "%TOOLKIT%\Utilities\common.bat" :WriteLog "Audio" "%AUDIO%"

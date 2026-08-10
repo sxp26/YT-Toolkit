@@ -39,7 +39,7 @@ if not defined FORMAT (
     set FORMAT=bv*[height^<=720]+ba/b[height^<=720]
 )
 
-yt-dlp --js-runtimes node --remote-components ejs:github -f "%FORMAT%" --merge-output-format mp4 -o "%SAVE%\%%(title)s.%%(ext)s" "%URL%"
+py -m yt_dlp --js-runtimes node -f "%FORMAT%" --merge-output-format mp4 -o "%SAVE%\%%(title)s.%%(ext)s" "%URL%"
 
 if %errorlevel%==0 (
     call "%TOOLKIT%\Utilities\common.bat" :WriteLog "Video"

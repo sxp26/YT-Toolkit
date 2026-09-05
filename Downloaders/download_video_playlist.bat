@@ -31,13 +31,13 @@ echo.
 
 set /p QUALITY=Enter choice: 
 
-if "%QUALITY%"=="1" set FORMAT=bv*[height^<=480]+ba/b[height^<=480]
-if "%QUALITY%"=="2" set FORMAT=bv*[height^<=720]+ba/b[height^<=720]
-if "%QUALITY%"=="3" set FORMAT=bv*[height^<=1080]+ba/b[height^<=1080]
+if "%QUALITY%"=="1" set "FORMAT=bv*[vcodec^=avc1][height<=480]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=480]/bv*[height<=480]+ba/b[height<=480]"
+if "%QUALITY%"=="2" set "FORMAT=bv*[vcodec^=avc1][height<=720]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=720]/bv*[height<=720]+ba/b[height<=720]"
+if "%QUALITY%"=="3" set "FORMAT=bv*[vcodec^=avc1][height<=1080]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=1080]/bv*[height<=1080]+ba/b[height<=1080]"
 
 if not defined FORMAT (
     echo Invalid choice. Using 720p.
-    set FORMAT=bv*[height^<=720]+ba/b[height^<=720]
+    set "FORMAT=bv*[vcodec^=avc1][height<=720]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=720]/bv*[height<=720]+ba/b[height<=720]"
 )
 
 echo.

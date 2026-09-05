@@ -26,9 +26,12 @@ VIDEO_ARCHIVE = LOGS_DIR / "video_playlist_archive.txt"
 AUDIO_ARCHIVE = LOGS_DIR / "audio_playlist_archive.txt"
 
 QUALITY_FORMATS = {
-    "480p": "bv*[height<=480]+ba/b[height<=480]",
-    "720p": "bv*[height<=720]+ba/b[height<=720]",
-    "1080p": "bv*[height<=1080]+ba/b[height<=1080]",
+    "480p": "bv*[vcodec^=avc1][height<=480]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=480]"
+            "/bv*[height<=480]+ba/b[height<=480]",
+    "720p": "bv*[vcodec^=avc1][height<=720]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=720]"
+            "/bv*[height<=720]+ba/b[height<=720]",
+    "1080p": "bv*[vcodec^=avc1][height<=1080]+ba[acodec^=mp4a]/b[vcodec^=avc1][height<=1080]"
+             "/bv*[height<=1080]+ba/b[height<=1080]",
 }
 
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
